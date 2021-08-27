@@ -9,6 +9,10 @@ export const pokemonApi = createApi({
   endpoints: (builder) => ({
     getPokemonByName: builder.query<Pokemon, string>({
       query: (name) => `pokemon/${name}`,
+      onQueryStarted: async (arg, { dispatch, queryFulfilled }) => {
+        const response = await queryFulfilled;
+        dispatch(pokemonsSlice.actions.pokemonFetched(response.data));
+      },
     }),
 
     getPokemonList: builder.query<{ results: Pokemon[] }, number>({

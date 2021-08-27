@@ -2,6 +2,9 @@ import { createEntityAdapter, createSlice } from "@reduxjs/toolkit";
 
 export interface Pokemon {
   name: string;
+  sprites?: {
+    front_default: string;
+  };
 }
 
 export const pokemonsAdapter = createEntityAdapter<Pokemon>({
@@ -12,6 +15,7 @@ export const pokemonsSlice = createSlice({
   name: "pokemons",
   initialState: pokemonsAdapter.getInitialState(),
   reducers: {
-    pokemonsFetched: pokemonsAdapter.addMany,
+    pokemonsFetched: pokemonsAdapter.upsertMany,
+    pokemonFetched: pokemonsAdapter.upsertOne,
   },
 });
